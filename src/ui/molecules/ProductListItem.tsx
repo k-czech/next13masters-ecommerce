@@ -8,7 +8,7 @@ type ProductListItemProps = {
 
 export const ProductListItem = ({ product }: ProductListItemProps) => {
 	return (
-		<li className="rounded-lg bg-white p-4 shadow" data-testid="products-list">
+		<li className="rounded-lg bg-white p-4 shadow">
 			<article>
 				<ProductCoverImage {...product.coverImage} />
 				<ProductListItemDescription product={product} />
