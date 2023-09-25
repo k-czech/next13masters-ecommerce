@@ -13,7 +13,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-				<main className="h-screen bg-white">{children}</main>
+				<main className="h-screen bg-white">
+					<section className="mx-auto max-w-md p-12 sm:max-w-2xl sm:py-16 md:max-w-4xl lg:max-w-7xl">
+						{children}
+					</section>
+				</main>
 			</body>
 		</html>
 	);

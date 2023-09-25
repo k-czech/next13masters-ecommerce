@@ -1,5 +1,5 @@
-import { ProductList } from "@/ui/organisms/ProductList";
-import { type ProductItemType } from "@/ui/types";
+import { ProductList } from "@/components/organisms/ProductList";
+import { type ProductItemType } from "@/components/types";
 
 const productsData: ProductItemType[] = [
 	{
@@ -41,9 +41,5 @@ const productsData: ProductItemType[] = [
 ];
 
 export default function Home() {
-	return (
-		<section className="mx-auto max-w-md p-12 sm:max-w-2xl sm:py-16 md:max-w-4xl lg:max-w-7xl">
-			<ProductList products={productsData} />
-		</section>
-	);
+	return <ProductList products={productsData} />;
 }
