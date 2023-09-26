@@ -1,5 +1,5 @@
-import { ClientComponent } from "@/components/atoms/ClientComponent";
-import { ServerComponent } from "@/components/atoms/ServerComponent";
+import { ClientComponent } from "@/ui/atoms/ClientComponent";
+import { ServerComponent } from "@/ui/atoms/ServerComponent";
 
 const Test1 = () => {
 	return (
