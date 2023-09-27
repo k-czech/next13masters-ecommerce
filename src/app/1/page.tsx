@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const Page1 = () => {
+export default function Page1() {
 	return (
 		<div className="flex flex-col">
 			Strona 1
@@ -9,6 +9,4 @@ const Page1 = () => {
 			</Link>
 		</div>
 	);
-};
-
-export default Page1;
+}
