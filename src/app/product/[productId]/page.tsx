@@ -1,16 +1,13 @@
-export default function SingleProductPage({
-	params,
-	searchParams,
-}: {
-	params: { productId: string };
-	searchParams: { [key: string]: string | string[] };
-}) {
-	const id = searchParams.id.toString();
+import SingleProductPage from "./SingleProductPage";
 
-	return (
-		<div>
-			<h1>Single Product Page {params.productId}</h1>
-			<span>{id}</span>
-		</div>
-	);
+export async function generateStaticParams() {
+	const res = await fetch(`https://naszsklep-api.vercel.app/api/products`);
+	const products = (await res.json()) as { id: string; title: string }[];
+	return products.map((product) => ({
+		productId: product.id,
+	}));
+}
+
+export default async function ProductDetailsPage({ params }: { params: { productId: string } }) {
+	return <SingleProductPage params={params} />;
 }

@@ -11,3 +11,7 @@ export const formatedAmount = (amount: number) => {
 export const cn = (...inputs: ClassValue[]) => {
 	return twMerge(clsx(inputs));
 };
+
+export const sleep = (ms: number) => {
+	return new Promise((resolve) => setTimeout(resolve, ms));
+};
