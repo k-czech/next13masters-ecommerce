@@ -1,5 +1,5 @@
-import { ClientComponent } from "@/ui/atoms/ClientComponent";
-import { ServerComponent } from "@/ui/atoms/ServerComponent";
+import { ClientComponent } from "@/components/atoms/ClientComponent";
+import { ServerComponent } from "@/components/atoms/ServerComponent";
 
 export default function Test1() {
 	return (

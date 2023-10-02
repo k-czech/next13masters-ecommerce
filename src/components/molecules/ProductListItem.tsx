@@ -1,9 +1,9 @@
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
-import { ProductCoverImage } from "@/ui/atoms/ProductCoverImage";
-import { ProductListItemDescription } from "@/ui/atoms/ProductListItemDescription";
+import { ProductCoverImage } from "@/components/atoms/ProductCoverImage";
+import { ProductListItemDescription } from "@/components/atoms/ProductListItemDescription";
 import { Button } from "@/components/ui/button";
-import { type ProductItemType } from "@/ui/types";
+import { type ProductItemType } from "@/components/types";
 
 type ProductListItemProps = {
 	product: ProductItemType;

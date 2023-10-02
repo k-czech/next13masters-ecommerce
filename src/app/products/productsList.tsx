@@ -1,5 +1,5 @@
-import { ProductListItem } from "@/ui/molecules/ProductListItem";
-import { type ProductItemType } from "@/ui/types";
+import { ProductListItem } from "@/components/molecules/ProductListItem";
+import { type ProductItemType } from "@/components/types";
 import { sleep } from "@/utils";
 
 export const ProductsList = async ({ page }: { page: number }) => {

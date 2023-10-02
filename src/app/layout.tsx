@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ActiveLink } from "@/ui/atoms/ActiveLink";
+import { ActiveLink } from "@/components/atoms/ActiveLink";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });

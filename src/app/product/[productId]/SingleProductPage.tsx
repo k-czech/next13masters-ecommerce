@@ -1,8 +1,8 @@
 import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ProductCoverImage } from "@/ui/atoms/ProductCoverImage";
-import { ProductListItemDescription } from "@/ui/atoms/ProductListItemDescription";
-import { type ProductItemType } from "@/ui/types";
+import { ProductCoverImage } from "@/components/atoms/ProductCoverImage";
+import { ProductListItemDescription } from "@/components/atoms/ProductListItemDescription";
+import { type ProductItemType } from "@/components/types";
 
 export default async function SingleProductPage({ params }: { params: { productId: string } }) {
 	const res = await fetch(`https://naszsklep-api.vercel.app/api/products/${params.productId}`);
