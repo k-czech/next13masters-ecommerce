@@ -11,17 +11,15 @@ type ProductListItemProps = {
 
 export const ProductListItem = ({ product }: ProductListItemProps) => {
 	return (
-		<li className="rounded-lg bg-white p-4 shadow">
-			<article>
-				<Link href={`/product/${product.id}`}>
-					<ProductCoverImage src={product.image} alt={product.title} />
-					<ProductListItemDescription product={product} />
-				</Link>
-				<Button variant="default" className="mt-2">
-					<ShoppingCart className="mr-2 h-4 w-4" />
-					Add to cart
-				</Button>
-			</article>
-		</li>
+		<article className="col-span-4 ">
+			<Link href={`/product/${product.id}`}>
+				<ProductCoverImage src={product.image} alt={product.title} />
+				<ProductListItemDescription product={product} />
+			</Link>
+			<Button variant="default" className="mt-2">
+				<ShoppingCart className="mr-2 h-4 w-4" />
+				Add to cart
+			</Button>
+		</article>
 	);
 };
