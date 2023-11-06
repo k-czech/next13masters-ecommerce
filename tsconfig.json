@@ -32,7 +32,8 @@
 		"**/*.tsx",
 		".next/types/**/*.ts",
 		"tailwind.config.js",
-		"src/app/(static-content)/regulamin/regulamin.mdx"
+		"src/app/(static-content)/regulamin/regulamin.mdx",
+		".graphqlrc.ts"
 	],
 	"exclude": ["node_modules"]
 }

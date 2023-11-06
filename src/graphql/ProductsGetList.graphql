@@ -1,0 +1,14 @@
+query ProductsGetList {
+	pageProductCollection {
+		items {
+			slug
+			name
+			description
+			price
+			featuredProductImage {
+				title
+				url
+			}
+		}
+	}
+}
