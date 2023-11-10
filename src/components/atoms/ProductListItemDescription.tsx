@@ -1,17 +1,15 @@
-import { type ProductItemType } from "@/components/types";
+import { type ProductGetByIdQuery } from "@/gql/graphql";
 import { formatedAmount } from "@/utils";
 
 type ProductListItemDescriptionProps = {
-	product: ProductItemType;
+	product: ProductGetByIdQuery["pageProduct"];
 };
 
-export const ProductListItemDescription = ({
-	product: { title, price },
-}: ProductListItemDescriptionProps) => {
+export const ProductListItemDescription = ({ product }: ProductListItemDescriptionProps) => {
 	return (
 		<div className="mt-4">
-			<h3 className="text-lg font-semibold text-gray-700">{title}</h3>
-			<p className="text-sm text-gray-500">{formatedAmount(price / 100)}</p>
+			<h3 className="text-lg font-semibold text-gray-700">{product?.name}</h3>
+			<p className="text-sm text-gray-500">{formatedAmount(Number(product?.price) / 100)}</p>
 		</div>
 	);
 };

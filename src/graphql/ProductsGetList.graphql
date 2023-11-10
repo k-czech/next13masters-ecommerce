@@ -1,6 +1,9 @@
 query ProductsGetList {
 	pageProductCollection {
 		items {
+			sys {
+				id
+			}
 			slug
 			name
 			description

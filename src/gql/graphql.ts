@@ -1273,10 +1273,17 @@ export type CfPageProductNestedFilter = {
   sys?: InputMaybe<SysFilter>;
 };
 
+export type ProductGetByIdQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type ProductGetByIdQuery = { pageProduct?: { slug?: string | null, name?: string | null, description?: string | null, price?: number | null, featuredProductImage?: { title?: string | null, url?: string | null } | null } | null };
+
 export type ProductsGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProductsGetListQuery = { pageProductCollection?: { items: Array<{ slug?: string | null, name?: string | null, description?: string | null, price?: number | null, featuredProductImage?: { title?: string | null, url?: string | null } | null } | null> } | null };
+export type ProductsGetListQuery = { pageProductCollection?: { items: Array<{ slug?: string | null, name?: string | null, description?: string | null, price?: number | null, sys: { id: string }, featuredProductImage?: { title?: string | null, url?: string | null } | null } | null> } | null };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -1293,10 +1300,27 @@ export class TypedDocumentString<TResult, TVariables>
   }
 }
 
+export const ProductGetByIdDocument = new TypedDocumentString(`
+    query ProductGetById($id: String!) {
+  pageProduct(id: $id) {
+    slug
+    name
+    description
+    price
+    featuredProductImage {
+      title
+      url
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<ProductGetByIdQuery, ProductGetByIdQueryVariables>;
 export const ProductsGetListDocument = new TypedDocumentString(`
     query ProductsGetList {
   pageProductCollection {
     items {
+      sys {
+        id
+      }
       slug
       name
       description

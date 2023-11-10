@@ -1,4 +1,9 @@
-import { ProductsGetListDocument, type TypedDocumentString } from "@/gql/graphql";
+import { type ProductItemType } from "@/components/types";
+import {
+	ProductGetByIdDocument,
+	ProductsGetListDocument,
+	type TypedDocumentString,
+} from "@/gql/graphql";
 
 type GraphQLResponse<T> =
 	| { data?: undefined; errors: { message: string }[] }
@@ -43,7 +48,7 @@ export const getProductsList = async () => {
 	return grapqlResponse.pageProductCollection.items.map((p) => {
 		if (!p) return;
 		return {
-			id: p.slug,
+			id: p.sys.id,
 			title: p.name,
 			price: p.price,
 			description: p.description,
@@ -56,4 +61,12 @@ export const getProductsList = async () => {
 			longDescription: p.description,
 		};
 	});
+};
+
+export const getProductById = async (id: ProductItemType["id"]) => {
+	const grapqlResponse = await executeQuery(ProductGetByIdDocument, {
+		id,
+	});
+
+	return grapqlResponse.pageProduct;
 };

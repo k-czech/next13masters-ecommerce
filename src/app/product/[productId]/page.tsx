@@ -1,11 +1,12 @@
 import { type Metadata } from "next";
 import SingleProductPage from "./SingleProductPage";
+import { getProductById, getProductsList } from "@/api/products";
 
 export async function generateStaticParams() {
-	const res = await fetch(`https://naszsklep-api.vercel.app/api/products`);
-	const products = (await res.json()) as { id: string; title: string }[];
-	return products.map((product) => ({
-		productId: product.id,
+	const products = await getProductsList();
+
+	return products?.map((product) => ({
+		productId: product?.id,
 	}));
 }
 
@@ -14,11 +15,10 @@ export async function generateMetadata({
 }: {
 	params: { productId: string };
 }): Promise<Metadata> {
-	const res = await fetch(`https://naszsklep-api.vercel.app/api/products/${params.productId}`);
-	const product = (await res.json()) as { title: string; description: string };
+	const product = await getProductById(params.productId);
 	return {
-		title: product.title,
-		description: product.description,
+		title: product?.name,
+		description: product?.description,
 	};
 }
 
