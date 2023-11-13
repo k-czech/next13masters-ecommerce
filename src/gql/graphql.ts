@@ -1278,7 +1278,9 @@ export type ProductGetByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductGetByIdQuery = { pageProduct?: { slug?: string | null, name?: string | null, description?: string | null, price?: number | null, featuredProductImage?: { title?: string | null, url?: string | null } | null } | null };
+export type ProductGetByIdQuery = { pageProduct?: { slug?: string | null, name?: string | null, description?: string | null, price?: number | null, sys: { id: string }, featuredProductImage?: { title?: string | null, url?: string | null } | null } | null };
+
+export type ProductsGetListItemFragment = { slug?: string | null, name?: string | null, description?: string | null, price?: number | null, sys: { id: string }, featuredProductImage?: { title?: string | null, url?: string | null } | null };
 
 export type ProductsGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1299,37 +1301,58 @@ export class TypedDocumentString<TResult, TVariables>
     return this.value;
   }
 }
-
+export const ProductsGetListItemFragmentDoc = new TypedDocumentString(`
+    fragment ProductsGetListItem on PageProduct {
+  sys {
+    id
+  }
+  slug
+  name
+  description
+  price
+  featuredProductImage {
+    title
+    url
+  }
+}
+    `, {"fragmentName":"ProductsGetListItem"}) as unknown as TypedDocumentString<ProductsGetListItemFragment, unknown>;
 export const ProductGetByIdDocument = new TypedDocumentString(`
     query ProductGetById($id: String!) {
   pageProduct(id: $id) {
-    slug
-    name
-    description
-    price
-    featuredProductImage {
-      title
-      url
-    }
+    ...ProductsGetListItem
   }
 }
-    `) as unknown as TypedDocumentString<ProductGetByIdQuery, ProductGetByIdQueryVariables>;
+    fragment ProductsGetListItem on PageProduct {
+  sys {
+    id
+  }
+  slug
+  name
+  description
+  price
+  featuredProductImage {
+    title
+    url
+  }
+}`) as unknown as TypedDocumentString<ProductGetByIdQuery, ProductGetByIdQueryVariables>;
 export const ProductsGetListDocument = new TypedDocumentString(`
     query ProductsGetList {
   pageProductCollection {
     items {
-      sys {
-        id
-      }
-      slug
-      name
-      description
-      price
-      featuredProductImage {
-        title
-        url
-      }
+      ...ProductsGetListItem
     }
   }
 }
-    `) as unknown as TypedDocumentString<ProductsGetListQuery, ProductsGetListQueryVariables>;
+    fragment ProductsGetListItem on PageProduct {
+  sys {
+    id
+  }
+  slug
+  name
+  description
+  price
+  featuredProductImage {
+    title
+    url
+  }
+}`) as unknown as TypedDocumentString<ProductsGetListQuery, ProductsGetListQueryVariables>;

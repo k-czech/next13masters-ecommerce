@@ -3,17 +3,20 @@ import Link from "next/link";
 import { ProductCoverImage } from "@/components/atoms/ProductCoverImage";
 import { ProductListItemDescription } from "@/components/atoms/ProductListItemDescription";
 import { Button } from "@/components/ui/button";
-import { type ProductItemType } from "@/components/types";
+import { type ProductsGetListItemFragment } from "@/gql/graphql";
 
 type ProductListItemProps = {
-	product: ProductItemType;
+	product: ProductsGetListItemFragment;
 };
 
 export const ProductListItem = ({ product }: ProductListItemProps) => {
 	return (
 		<article className="col-span-4 ">
-			<Link href={`/product/${product.id}`}>
-				<ProductCoverImage src={product.image} alt={product.title} />
+			<Link href={`/product/${product.sys?.id}`}>
+				<ProductCoverImage
+					src={String(product.featuredProductImage?.url)}
+					alt={String(product.featuredProductImage?.title)}
+				/>
 				<ProductListItemDescription product={product} />
 			</Link>
 			<Button variant="default" className="mt-2">

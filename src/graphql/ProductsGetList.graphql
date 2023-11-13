@@ -1,17 +1,7 @@
 query ProductsGetList {
 	pageProductCollection {
 		items {
-			sys {
-				id
-			}
-			slug
-			name
-			description
-			price
-			featuredProductImage {
-				title
-				url
-			}
+			...ProductsGetListItem
 		}
 	}
 }

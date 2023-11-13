@@ -1,0 +1,13 @@
+fragment ProductsGetListItem on PageProduct {
+	sys {
+		id
+	}
+	slug
+	name
+	description
+	price
+	featuredProductImage {
+		title
+		url
+	}
+}

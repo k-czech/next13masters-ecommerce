@@ -1,8 +1,8 @@
-import { type ProductGetByIdQuery } from "@/gql/graphql";
+import { type ProductsGetListItemFragment } from "@/gql/graphql";
 import { formatedAmount } from "@/utils";
 
 type ProductListItemDescriptionProps = {
-	product: ProductGetByIdQuery["pageProduct"];
+	product: ProductsGetListItemFragment;
 };
 
 export const ProductListItemDescription = ({ product }: ProductListItemDescriptionProps) => {

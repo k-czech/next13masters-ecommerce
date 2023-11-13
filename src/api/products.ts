@@ -1,7 +1,7 @@
-import { type ProductItemType } from "@/components/types";
 import {
 	ProductGetByIdDocument,
 	ProductsGetListDocument,
+	type ProductsGetListItemFragment,
 	type TypedDocumentString,
 } from "@/gql/graphql";
 
@@ -45,25 +45,10 @@ export const getProductsList = async () => {
 	const grapqlResponse = await executeQuery(ProductsGetListDocument, {});
 
 	if (!grapqlResponse.pageProductCollection) return;
-	return grapqlResponse.pageProductCollection.items.map((p) => {
-		if (!p) return;
-		return {
-			id: p.sys.id,
-			title: p.name,
-			price: p.price,
-			description: p.description,
-			category: "",
-			rating: {
-				rate: 5,
-				count: 1,
-			},
-			image: p.featuredProductImage?.url || "",
-			longDescription: p.description,
-		};
-	});
+	return grapqlResponse.pageProductCollection.items;
 };
 
-export const getProductById = async (id: ProductItemType["id"]) => {
+export const getProductById = async (id: ProductsGetListItemFragment["sys"]["id"]) => {
 	const grapqlResponse = await executeQuery(ProductGetByIdDocument, {
 		id,
 	});
