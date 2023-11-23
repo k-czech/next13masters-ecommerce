@@ -1,4 +1,5 @@
 import {
+	GetProductBySlugDocument,
 	ProductGetByIdDocument,
 	ProductsGetListDocument,
 	type ProductsGetListItemFragment,
@@ -9,7 +10,7 @@ type GraphQLResponse<T> =
 	| { data?: undefined; errors: { message: string }[] }
 	| { data: T; errors?: undefined };
 
-const executeQuery = async <TResult, TVariables>(
+export const executeQuery = async <TResult, TVariables>(
 	query: TypedDocumentString<TResult, TVariables>,
 	variables: TVariables,
 ): Promise<TResult> => {
@@ -17,7 +18,7 @@ const executeQuery = async <TResult, TVariables>(
 		throw new Error("NEXT_PUBLIC_SPACE_ID and NEXT_PUBLIC_ACCESS_TOKEN must be set");
 	}
 	const res = await fetch(
-		`https://graphql.contentful.com/content/v1/spaces/${process.env.NEXT_PUBLIC_SPACE_ID}/environments/master`,
+		`https://api-eu-central-1-shared-euc1-02.hygraph.com/v2/${process.env.NEXT_PUBLIC_SPACE_ID}/master`,
 		{
 			method: "POST",
 			body: JSON.stringify({
@@ -26,7 +27,7 @@ const executeQuery = async <TResult, TVariables>(
 			}),
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`,
+				// Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`,
 			},
 		},
 	);
@@ -44,14 +45,22 @@ const executeQuery = async <TResult, TVariables>(
 export const getProductsList = async () => {
 	const grapqlResponse = await executeQuery(ProductsGetListDocument, {});
 
-	if (!grapqlResponse.pageProductCollection) return;
-	return grapqlResponse.pageProductCollection.items;
+	if (!grapqlResponse.products) return;
+	return grapqlResponse.products;
 };
 
-export const getProductById = async (id: ProductsGetListItemFragment["sys"]["id"]) => {
+export const getProductById = async (id: ProductsGetListItemFragment["id"]) => {
 	const grapqlResponse = await executeQuery(ProductGetByIdDocument, {
 		id,
 	});
 
-	return grapqlResponse.pageProduct;
+	return grapqlResponse.product;
+};
+
+export const getProductBySlug = async (slug: ProductsGetListItemFragment["slug"]) => {
+	const grapqlResponse = await executeQuery(GetProductBySlugDocument, {
+		slug,
+	});
+
+	return grapqlResponse.products[0];
 };

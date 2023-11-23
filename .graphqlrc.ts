@@ -8,9 +8,10 @@ const config: CodegenConfig = {
 	ignoreNoDocuments: true,
 	schema: [
 		{
-			"https://graphql.contentful.com/content/v1/spaces/oyv61jwh6fda/environments/master": {
+			"https://api-eu-central-1-shared-euc1-02.hygraph.com/v2/clpawdb4a47vl01t7gbsyfiou/master": {
 				headers: {
-					Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`,
+					"Content-Type": "application/json",
+					// Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`,
 				},
 			},
 		},

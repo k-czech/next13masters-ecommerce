@@ -1,13 +1,10 @@
-fragment ProductsGetListItem on PageProduct {
-	sys {
-		id
-	}
+fragment ProductsGetListItem on Product {
+	id
 	slug
 	name
 	description
 	price
-	featuredProductImage {
-		title
+	images {
 		url
 	}
 }

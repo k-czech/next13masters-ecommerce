@@ -11,7 +11,7 @@ export const ProductsList = async () => {
 	return (
 		<>
 			{products.map((product) => (
-				<ProductListItem key={product?.sys.id} product={product as ProductsGetListItemFragment} />
+				<ProductListItem key={product.id} product={product as ProductsGetListItemFragment} />
 			))}
 		</>
 	);

@@ -1,4 +1,4 @@
-query ProductGetById($id: ID!) {
+query CartGetById($id: ID!) {
 	product(where: { id: $id }) {
 		...ProductsGetListItem
 	}

@@ -1,7 +1,5 @@
 query ProductsGetList {
-	pageProductCollection {
-		items {
-			...ProductsGetListItem
-		}
+	products {
+		...ProductsGetListItem
 	}
 }
