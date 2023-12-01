@@ -26,6 +26,13 @@
 			"@/*": ["./src/*"]
 		}
 	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "tailwind.config.js"],
+	"include": [
+		"next-env.d.ts",
+		"**/*.ts",
+		"**/*.tsx",
+		".next/types/**/*.ts",
+		"tailwind.config.js",
+		"src/app/(static-content)/regulamin/regulamin.mdx"
+	],
 	"exclude": ["node_modules"]
 }
