@@ -18,7 +18,7 @@ export const executeQuery = async <TResult, TVariables>(
 		throw new Error("NEXT_PUBLIC_SPACE_ID and NEXT_PUBLIC_ACCESS_TOKEN must be set");
 	}
 	const res = await fetch(
-		`https://api-eu-central-1-shared-euc1-02.hygraph.com/v2/${process.env.NEXT_PUBLIC_SPACE_ID}/master`,
+		`https://eu-central-1-shared-euc1-02.cdn.hygraph.com/content/${process.env.NEXT_PUBLIC_SPACE_ID}/master`,
 		{
 			method: "POST",
 			body: JSON.stringify({
@@ -27,7 +27,7 @@ export const executeQuery = async <TResult, TVariables>(
 			}),
 			headers: {
 				"Content-Type": "application/json",
-				// Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`,
+				Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`,
 			},
 		},
 	);

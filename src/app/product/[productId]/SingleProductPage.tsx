@@ -1,14 +1,19 @@
-import { ShoppingCart } from "lucide-react";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import { executeQuery, getProductBySlug } from "@/api/products";
+import { executeQuery, getProductById } from "@/api/products";
+import { AddToCartButton } from "@/components/atoms/AddToCartButton";
 import { ProductCoverImage } from "@/components/atoms/ProductCoverImage";
 import { ProductListItemDescription } from "@/components/atoms/ProductListItemDescription";
-import { Button } from "@/components/ui/button";
-import { CartGetByIdDocument, ProductGetByIdDocument } from "@/gql/graphql";
+import {
+	CartAddProductDocument,
+	CartCreateDocument,
+	CartGetByIdDocument,
+	ProductGetByIdDocument,
+	type CartFragment,
+} from "@/gql/graphql";
 
-export default async function SingleProductPage({ params }: { params: { slug: string } }) {
-	const product = await getProductBySlug(params.slug);
+export default async function SingleProductPage({ params }: { params: { productId: string } }) {
+	const product = await getProductById(params.productId);
 
 	if (!product) {
 		throw notFound();
@@ -26,22 +31,15 @@ export default async function SingleProductPage({ params }: { params: { slug: st
 				<input type="hidden" name="productId" value={product.id} />
 				<ProductCoverImage src={String(product.images[0]?.url)} alt={String(product.name)} />
 				<ProductListItemDescription product={product} />
-				<Button
-					type="submit"
-					variant="default"
-					className="mt-2 rounded-md border bg-slate-700 px-8 py-3 text-white"
-				>
-					<ShoppingCart className="mr-2 h-4 w-4" />
-					Add to cart
-				</Button>
+				<AddToCartButton />
 			</form>
 		</article>
 	);
 }
-const getOrCreateCart = async () => {
+const getOrCreateCart = async (): Promise<CartFragment> => {
 	const cartId = cookies().get("cartId")?.value;
 	if (cartId) {
-		const { pageProductCollection: cart } = await executeQuery(CartGetByIdDocument, {
+		const { order: cart } = await executeQuery(CartGetByIdDocument, {
 			id: cartId,
 		});
 		if (cart) {
@@ -49,7 +47,7 @@ const getOrCreateCart = async () => {
 		}
 	}
 
-	const { createOrder: newCart } = await executeQuery(CartCreateDocument);
+	const { createOrder: newCart } = await executeQuery(CartCreateDocument, {});
 	if (!newCart) {
 		throw new Error("Failed to create cart");
 	}
@@ -58,7 +56,7 @@ const getOrCreateCart = async () => {
 	return newCart;
 };
 
-const addProductToCart = async (cartId: string, productId: string) => {
+const addProductToCart = async (orderId: string, productId: string) => {
 	const { product } = await executeQuery(ProductGetByIdDocument, {
 		id: productId,
 	});
@@ -67,8 +65,8 @@ const addProductToCart = async (cartId: string, productId: string) => {
 		throw new Error(`Product with id ${productId} not found`);
 	}
 
-	await executeQuery(CartAddItemDocument, {
-		cartId,
+	await executeQuery(CartAddProductDocument, {
+		orderId,
 		productId,
 		total: product.price,
 	});
