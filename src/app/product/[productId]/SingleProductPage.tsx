@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
+import { revalidateTag } from "next/cache";
 import { executeQuery, getProductById } from "@/api/products";
 import { AddToCartButton } from "@/components/atoms/AddToCartButton";
 import { ProductCoverImage } from "@/components/atoms/ProductCoverImage";
@@ -23,6 +24,8 @@ export default async function SingleProductPage({ params }: { params: { productI
 		"use server";
 		const cart = await getOrCreateCart();
 		await addProductToCart(cart.id, product.id);
+
+		revalidateTag("cart");
 	};
 
 	return (
@@ -39,35 +42,51 @@ export default async function SingleProductPage({ params }: { params: { productI
 const getOrCreateCart = async (): Promise<CartFragment> => {
 	const cartId = cookies().get("cartId")?.value;
 	if (cartId) {
-		const { order: cart } = await executeQuery(CartGetByIdDocument, {
-			id: cartId,
+		const { order: cart } = await executeQuery({
+			query: CartGetByIdDocument,
+			variables: {
+				id: cartId,
+			},
+			next: { tags: ["cart"] },
 		});
 		if (cart) {
 			return cart;
 		}
 	}
 
-	const { createOrder: newCart } = await executeQuery(CartCreateDocument, {});
+	const { createOrder: newCart } = await executeQuery({
+		query: CartCreateDocument,
+		variables: undefined,
+	});
 	if (!newCart) {
 		throw new Error("Failed to create cart");
 	}
 
-	cookies().set("cartId", newCart.id);
+	cookies().set("cartId", newCart.id, {
+		httpOnly: true,
+		sameSite: "lax",
+	});
 	return newCart;
 };
 
 const addProductToCart = async (orderId: string, productId: string) => {
-	const { product } = await executeQuery(ProductGetByIdDocument, {
-		id: productId,
+	const { product } = await executeQuery({
+		query: ProductGetByIdDocument,
+		variables: {
+			id: productId,
+		},
 	});
 
 	if (!product) {
 		throw new Error(`Product with id ${productId} not found`);
 	}
 
-	await executeQuery(CartAddProductDocument, {
-		orderId,
-		productId,
-		total: product.price,
+	await executeQuery({
+		query: CartAddProductDocument,
+		variables: {
+			orderId,
+			productId,
+			total: product.price,
+		},
 	});
 };

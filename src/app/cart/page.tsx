@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { IncrementProductQuantity } from "./IncrementProductQuantity";
 import { executeQuery } from "@/api/products";
 import { CartGetByIdDocument } from "@/gql/graphql";
 import { formatedAmount } from "@/utils";
@@ -11,8 +12,12 @@ const CartPage = async () => {
 		redirect("/");
 	}
 
-	const { order: cart } = await executeQuery(CartGetByIdDocument, {
-		id: cartId,
+	const { order: cart } = await executeQuery({
+		query: CartGetByIdDocument,
+		variables: {
+			id: cartId,
+		},
+		next: { tags: ["cart"] },
 	});
 
 	if (!cart) {
@@ -38,7 +43,9 @@ const CartPage = async () => {
 						return (
 							<tr key={item.product.id}>
 								<td>{item.product.name}</td>
-								<td>{item.quantity}</td>
+								<td className="text-center">
+									<IncrementProductQuantity itemId={item.product.id} quantity={item.quantity} />
+								</td>
 								<td>{formatedAmount(item.product.price)}</td>
 							</tr>
 						);
