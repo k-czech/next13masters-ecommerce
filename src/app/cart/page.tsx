@@ -4,6 +4,7 @@ import { IncrementProductQuantity } from "./IncrementProductQuantity";
 import { executeQuery } from "@/api/products";
 import { CartGetByIdDocument } from "@/gql/graphql";
 import { formatedAmount } from "@/utils";
+import { RemoveButton } from "@/components/atoms/RemoveButton";
 
 const CartPage = async () => {
 	const cartId = cookies().get("cartId")?.value;
@@ -18,6 +19,7 @@ const CartPage = async () => {
 			id: cartId,
 		},
 		next: { tags: ["cart"] },
+		cache: "no-store",
 	});
 
 	if (!cart) {
@@ -36,17 +38,20 @@ const CartPage = async () => {
 					</tr>
 				</thead>
 				<tbody>
-					{cart.orderItems.map((item) => {
+					{cart.orderItems.map((item, index) => {
 						if (!item.product) {
 							return null;
 						}
 						return (
-							<tr key={item.product.id}>
+							<tr key={`item-${index}`}>
 								<td>{item.product.name}</td>
 								<td className="text-center">
-									<IncrementProductQuantity itemId={item.product.id} quantity={item.quantity} />
+									<IncrementProductQuantity itemId={item.id} quantity={item.quantity} />
 								</td>
 								<td>{formatedAmount(item.product.price)}</td>
+								<td className="px-4 py-2">
+									<RemoveButton productId={item.id} />
+								</td>
 							</tr>
 						);
 					})}

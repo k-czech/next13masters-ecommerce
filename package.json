@@ -39,15 +39,16 @@
 	"devDependencies": {
 		"@graphql-codegen/cli": "5.0.0",
 		"@graphql-codegen/client-preset": "4.1.0",
+		"@graphql-typed-document-node/core": "^3.2.0",
 		"@next/env": "^14.0.1",
 		"@tailwindcss/typography": "^0.5.10",
 		"@typescript-eslint/eslint-plugin": "^6.6.0",
 		"@typescript-eslint/parser": "^6.6.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-import": "^2.28.1",
+		"graphql-codegen-typescript-common": "0.18.2",
 		"prettier": "^3.0.3",
-		"prettier-plugin-tailwindcss": "^0.5.4",
-		"graphql-codegen-typescript-common": "0.18.2"
+		"prettier-plugin-tailwindcss": "^0.5.4"
 	},
 	"optionalDependencies": {
 		"@parcel/watcher": "^2.1.0"

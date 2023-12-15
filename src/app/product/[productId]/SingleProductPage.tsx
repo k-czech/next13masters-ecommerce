@@ -57,6 +57,7 @@ const getOrCreateCart = async (): Promise<CartFragment> => {
 	const { createOrder: newCart } = await executeQuery({
 		query: CartCreateDocument,
 		variables: undefined,
+		cache: "no-store",
 	});
 	if (!newCart) {
 		throw new Error("Failed to create cart");
@@ -75,6 +76,7 @@ const addProductToCart = async (orderId: string, productId: string) => {
 		variables: {
 			id: productId,
 		},
+		cache: "no-store",
 	});
 
 	if (!product) {
@@ -88,5 +90,6 @@ const addProductToCart = async (orderId: string, productId: string) => {
 			productId,
 			total: product.price,
 		},
+		cache: "no-store",
 	});
 };
